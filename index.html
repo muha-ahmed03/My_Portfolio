@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhammad Ahmed Siddiqui — Data Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-deep: #0a0b0d;
+      --bg-card: #111318;
+      --bg-card-hover: #181b22;
+      --border: #1e2128;
+      --border-accent: #2a2d36;
+      --text-primary: #f2efe8;
+      --text-secondary: #9a968e;
+      --text-muted: #5e5c56;
+      --accent: #c8a55c;
+      --accent-glow: rgba(200, 165, 92, 0.12);
+      --accent-hover: #d4b76e;
+      --font-heading: 'Instrument Serif', serif;
+      --font-body: 'DM Sans', sans-serif;
+      --radius: 12px;
+      --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--accent); color: var(--bg-deep); }
+    a { text-decoration: none; color: inherit; }
+
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+    /* === REVEAL ANIMATION === */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* === NAVIGATION === */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px 0;
+      background: rgba(10, 11, 13, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+      transition: var(--transition);
+    }
+    nav.scrolled { border-bottom-color: var(--border); }
+    nav .container {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 400; color: var(--text-secondary);
+      letter-spacing: 0.04em; text-transform: uppercase;
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px; background: var(--accent);
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-toggle { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+    .nav-toggle span {
+      display: block; width: 22px; height: 1.5px; background: var(--text-primary);
+      transition: var(--transition);
+    }
+
+    /* === HERO === */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 70% 40%, var(--accent-glow), transparent),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(200,165,92,0.05), transparent);
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: absolute; inset: 0; opacity: 0.03;
+      background-image:
+        linear-gradient(var(--text-muted) 1px, transparent 1px),
+        linear-gradient(90deg, var(--text-muted) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-tag {
+      display: inline-block; font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+      margin-bottom: 24px;
+      padding: 6px 16px; border: 1px solid rgba(200,165,92,0.25);
+      border-radius: 100px;
+    }
+    .hero h1 {
+      font-family: var(--font-heading); font-weight: 400;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 1.05; letter-spacing: -0.03em;
+      margin-bottom: 28px; color: var(--text-primary);
+    }
+    .hero h1 em {
+      font-style: italic; color: var(--accent);
+    }
+    .hero-desc {
+      max-width: 580px; font-size: 1.05rem; line-height: 1.75;
+      color: var(--text-secondary); margin-bottom: 40px;
+    }
+    .hero-links {
+      display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px;
+    }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px; border-radius: 100px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      font-size: 0.85rem; color: var(--text-secondary);
+      transition: var(--transition);
+    }
+    .hero-link:hover {
+      border-color: var(--accent); color: var(--accent);
+      background: var(--accent-glow);
+    }
+    .hero-link svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 16px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 32px; border-radius: 100px; font-size: 0.9rem;
+      font-weight: 500; letter-spacing: 0.02em;
+      transition: var(--transition); cursor: pointer; border: none;
+    }
+    .btn-primary {
+      background: var(--accent); color: var(--bg-deep);
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--text-primary);
+      border: 1px solid var(--border-accent);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    .btn svg { width: 16px; height: 16px; }
+
+    /* === SECTIONS === */
+    section { padding: 100px 0; }
+    .section-label {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400; letter-spacing: -0.02em; margin-bottom: 48px;
+      color: var(--text-primary);
+    }
+    .section-title em { font-style: italic; color: var(--accent); }
+    .divider {
+      width: 100%; height: 1px; background: var(--border);
+    }
+
+    /* === SKILLS === */
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .skill-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 32px;
+      transition: var(--transition);
+    }
+    .skill-card:hover {
+      border-color: var(--accent); background: var(--bg-card-hover);
+      transform: translateY(-4px);
+    }
+    .skill-card-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--accent-glow); display: flex;
+      align-items: center; justify-content: center;
+      margin-bottom: 20px; color: var(--accent);
+    }
+    .skill-card-icon svg { width: 20px; height: 20px; }
+    .skill-card h3 {
+      font-family: var(--font-body); font-size: 1rem;
+      font-weight: 600; margin-bottom: 12px; color: var(--text-primary);
+    }
+    .skill-card ul { list-style: none; }
+    .skill-card li {
+      font-size: 0.88rem; color: var(--text-secondary);
+      padding: 4px 0; padding-left: 16px; position: relative;
+    }
+    .skill-card li::before {
+      content: ''; position: absolute; left: 0; top: 12px;
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--accent); opacity: 0.6;
+    }
+
+    /* === TIMELINE (Experience & Education) === */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+      width: 1px; background: var(--border-accent);
+    }
+    .timeline-item {
+      position: relative; margin-bottom: 48px;
+    }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: -37px; top: 6px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); border: 2px solid var(--bg-deep);
+    }
+    .timeline-date {
+      font-size: 0.78rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
+    }
+    .timeline-title {
+      font-size: 1.15rem; font-weight: 600; color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .timeline-sub {
+      font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 12px;
+    }
+    .timeline-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; }
+    .timeline-desc ul { list-style: none; margin-top: 8px; }
+    .timeline-desc li {
+      padding-left: 16px; position: relative; padding-bottom: 4px;
+    }
+    .timeline-desc li::before {
+      content: ''; position: absolute; left: 0; top: 10px;
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--accent); opacity: 0.5;
+    }
+
+    /* === CERTIFICATIONS === */
+    .certs-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+    }
+    .cert-card {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px;
+      transition: var(--transition);
+    }
+    .cert-card:hover { border-color: var(--accent); }
+    .cert-icon {
+      flex-shrink: 0; width: 36px; height: 36px;
+      border-radius: 8px; background: var(--accent-glow);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+    }
+    .cert-icon svg { width: 18px; height: 18px; }
+    .cert-title { font-size: 0.92rem; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
+    .cert-issuer { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* === PROJECTS === */
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+    .project-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: var(--transition);
+    }
+    .project-card:hover {
+      border-color: var(--accent); transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .project-card-body { padding: 28px; }
+    .project-type {
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .project-card h3 {
+      font-size: 1.15rem; font-weight: 600; color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    .project-card p {
+      font-size: 0.88rem; color: var(--text-secondary);
+      line-height: 1.65; margin-bottom: 16px;
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .project-tag {
+      font-size: 0.72rem; padding: 4px 12px; border-radius: 100px;
+      background: rgba(200,165,92,0.08); border: 1px solid rgba(200,165,92,0.15);
+      color: var(--accent); letter-spacing: 0.02em;
+    }
+
+    /* === CONTACT === */
+    .contact-section { text-align: center; }
+    .contact-links {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 16px; margin-top: 40px;
+    }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 16px 28px; border-radius: 100px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      font-size: 0.9rem; color: var(--text-secondary);
+      transition: var(--transition);
+    }
+    .contact-link:hover {
+      border-color: var(--accent); color: var(--accent);
+      background: var(--accent-glow); transform: translateY(-2px);
+    }
+    .contact-link svg { width: 18px; height: 18px; color: var(--accent); }
+
+    /* === FOOTER === */
+    footer {
+      padding: 40px 0; border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    footer p { font-size: 0.82rem; color: var(--text-muted); }
+    footer a { color: var(--accent); }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--bg-deep); border-bottom: 1px solid var(--border);
+        padding: 24px; gap: 20px;
+      }
+      .nav-toggle { display: flex; }
+      .hero h1 { font-size: clamp(2.2rem, 9vw, 3.5rem); }
+      .skills-grid, .projects-grid, .certs-grid {
+        grid-template-columns: 1fr;
+      }
+      section { padding: 72px 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav>
+    <div class="container">
+      <a href="#" class="nav-logo">Ahmed<span>.</span></a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="container hero-content">
+      <div class="hero-tag reveal">Data Analyst</div>
+      <h1 class="reveal">Muhammad Ahmed<br><em>Siddiqui</em></h1>
+      <p class="hero-desc reveal">An analytical and detail-oriented aspiring Data Analyst with a strong foundation in SQL, Excel, and Power BI. Passionate about transforming raw data into meaningful insights through data cleaning, analysis, reporting, and visualization.</p>
+      <div class="hero-links reveal">
+        <a href="/cdn-cgi/l/email-protection#81ece0e9ece4e5aff2e8e5e5e8f0f4e8afb1b2c1e6ece0e8edafe2eeec" class="hero-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <span class="__cf_email__" data-cfemail="85e8e4ede8e0e1abf6ece1e1ecf4f0ecabb5b6c5e2e8e4ece9abe6eae8">[email&#160;protected]</span>
+        </a>
+        <a href="https://wa.me/923183921351?text=Hey!%20I%27m%20interested%20in%20your%20services,%20lets%20get%20started!" target="_blank" rel="noopener noreferrer" class="hero-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +92 318 392 1351
+        </a>
+        <span class="hero-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+          Karachi, Pakistan
+        </span>
+      </div>
+      <div class="hero-actions reveal">
+        <a href="#projects" class="btn btn-primary">
+          View Projects
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/muhammad-ahmed-siddiqui-790932260/" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-label reveal">Expertise</div>
+      <h2 class="section-title reveal">Skills &amp; <em>Capabilities</em></h2>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <div class="skill-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          </div>
+          <h3>Data Analysis &amp; Visualization</h3>
+          <ul>
+            <li>Excel (Pivot Tables, Charts, Conditional Formatting)</li>
+            <li>Power BI (Dashboard Creation)</li>
+          </ul>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+          </div>
+          <h3>Database &amp; Querying</h3>
+          <ul>
+            <li>SQL</li>
+            <li>MSSQL</li>
+          </ul>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 7h3v3H7z"/><path d="M14 7h3v3h-3z"/><path d="M7 14h3v3H7z"/><path d="M14 14h3v3h-3z"/></svg>
+          </div>
+          <h3>Productivity Tools</h3>
+          <ul>
+            <li>MS Office (Word, PowerPoint, Outlook)</li>
+          </ul>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z"/><circle cx="12" cy="15" r="2"/></svg>
+          </div>
+          <h3>AI &amp; Digital Tools</h3>
+          <ul>
+            <li>Proficiency in AI tools</li>
+            <li>AI-assisted research &amp; productivity</li>
+          </ul>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Soft Skills</h3>
+          <ul>
+            <li>Time Management</li>
+            <li>Leadership &amp; Teamwork</li>
+            <li>Effective Communication</li>
+            <li>Critical Thinking &amp; Problem Solving</li>
+          </ul>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>Languages</h3>
+          <ul>
+            <li>English</li>
+            <li>Urdu</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-label reveal">Career</div>
+      <h2 class="section-title reveal">Professional <em>Experience</em></h2>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">Sept 2024 &mdash; Nov 2024</div>
+          <div class="timeline-title">Intern</div>
+          <div class="timeline-sub">OMEX Technologies</div>
+          <div class="timeline-desc">
+            Acquired practical experience in software development and database operations during the internship, enhancing technical, problem-solving, and data management skills.
+            <ul>
+              <li>Introduction to software development models and tools</li>
+              <li>Working with SQL commands</li>
+              <li>Understanding of MSSQL</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="container">
+      <div class="section-label reveal">Academic Background</div>
+      <h2 class="section-title reveal">Education</h2>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">2021 &mdash; 2025</div>
+          <div class="timeline-title">Bachelor's of Science in Software Engineering</div>
+          <div class="timeline-sub">DHA Suffa University</div>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-dot"></div>
+          <div class="timeline-date">2019 &mdash; 2021</div>
+          <div class="timeline-title">Intermediate</div>
+          <div class="timeline-sub">Govt. Dehli College</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="container">
+      <div class="section-label reveal">Credentials</div>
+      <h2 class="section-title reveal">Certifications</h2>
+      <div class="certs-grid">
+        <div class="cert-card reveal">
+          <div class="cert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+          </div>
+          <div>
+            <div class="cert-title">Essentials of Data Visualization using MS Excel</div>
+            <div class="cert-issuer">UniAthena &middot; Online Certificate</div>
+          </div>
+        </div>
+        <div class="cert-card reveal">
+          <div class="cert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+          </div>
+          <div>
+            <div class="cert-title">Basics of Microsoft Power BI</div>
+            <div class="cert-issuer">UniAthena &middot; Online Certificate</div>
+          </div>
+        </div>
+        <div class="cert-card reveal">
+          <div class="cert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+          </div>
+          <div>
+            <div class="cert-title">Basics of Data Visualization &amp; Exploration</div>
+            <div class="cert-issuer">UniAthena &middot; Online Certificate</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-label reveal">Portfolio</div>
+      <h2 class="section-title reveal">Featured <em>Projects</em></h2>
+
+      <div class="section-label reveal" style="margin-top:0">Academic Projects</div>
+      <div class="projects-grid" style="margin-bottom:48px;">
+        <div class="project-card reveal">
+          <div class="project-card-body">
+            <div class="project-type">Final Year Project</div>
+            <h3>AI-Powered Fake News Detection</h3>
+            <p>Developed a system that uses Natural Language Processing and Machine Learning to classify and report misinformation. Focused on combating the spread of fake news using Python libraries such as NLTK and Scikit-learn.</p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">NLP</span>
+              <span class="project-tag">Machine Learning</span>
+              <span class="project-tag">NLTK</span>
+              <span class="project-tag">Scikit-learn</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-card-body">
+            <div class="project-type">Team Project</div>
+            <h3>Gender Detection using ML Models</h3>
+            <p>Team project focused on detecting human gender from facial images. Utilized pre-trained ML models (RESNET, FACENET, OPENFACE) for face recognition and classification with high accuracy.</p>
+            <div class="project-tags">
+              <span class="project-tag">Machine Learning</span>
+              <span class="project-tag">RESNET</span>
+              <span class="project-tag">FACENET</span>
+              <span class="project-tag">OPENFACE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label reveal">Personal Projects</div>
+      <div class="projects-grid">
+        <div class="project-card reveal">
+          <div class="project-card-body">
+            <div class="project-type">Data Analytics</div>
+            <h3>La Liga Football Analytics Dashboard</h3>
+            <p>Interactive Excel dashboard for La Liga 2020&ndash;2025 football analytics. Features multi-season trends in goals, xG, shooting, home/away performance, matchweek scoring, and referee impact with slicer-driven views.</p>
+            <div class="project-tags">
+              <span class="project-tag">Excel</span>
+              <span class="project-tag">Data Analytics</span>
+              <span class="project-tag">Dashboard</span>
+              <span class="project-tag">Pivot Tables</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-card-body">
+            <div class="project-type">Data Analytics</div>
+            <h3>HR Employee Analytics Dashboard</h3>
+            <p>Designed an employee analytics dashboard to track workforce metrics including employee count, department performance, attendance, turnover, and salary distribution.</p>
+            <div class="project-tags">
+              <span class="project-tag">Excel</span>
+              <span class="project-tag">Dashboard</span>
+              <span class="project-tag">HR Analytics</span>
+              <span class="project-tag">Data Visualization</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-card reveal">
+          <div class="project-card-body">
+            <div class="project-type">Data Analytics</div>
+            <h3>E-Commerce Business Insights Dashboard</h3>
+            <p>Built a dynamic dashboard to analyze e-commerce sales performance, customer trends, product demand, and regional sales distribution. Performed data cleaning and trend analysis to identify top-performing products and seasonal patterns.</p>
+            <div class="project-tags">
+              <span class="project-tag">Power BI</span>
+              <span class="project-tag">Data Cleaning</span>
+              <span class="project-tag">E-Commerce</span>
+              <span class="project-tag">Dashboard</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <div class="section-label reveal">Get in Touch</div>
+      <h2 class="section-title reveal">Let's <em>Connect</em></h2>
+      <p class="reveal" style="max-width:500px;margin:0 auto;color:var(--text-secondary);font-size:1rem;">Feel free to reach out for collaborations, opportunities, or just a conversation about data.</p>
+      <div class="contact-links reveal">
+        <a href="/cdn-cgi/l/email-protection#d6bbb7bebbb3b2f8a5bfb2b2bfa7a3bff8e6e596b1bbb7bfbaf8b5b9bb" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          Email Me
+        </a>
+        <a href="https://wa.me/923183921351?text=Hey!%20I%27m%20interested%20in%20your%20services,%20lets%20get%20started!" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          WhatsApp
+        </a>
+        <a href="https://www.linkedin.com/in/muhammad-ahmed-siddiqui-790932260/" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 Muhammad Ahmed Siddiqui. Built with purpose.</p>
+    </div>
+  </footer>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Nav scroll effect
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Mobile nav toggle
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => {
+      links.classList.toggle('open');
+    });
+    links.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => links.classList.remove('open'));
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
